@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f8f6ee">
+<title>测试你是什么动物 · 动物性格研究所</title>
+<meta name="description" content="12 道日常情境题，找到与你相似的动物。">
+<style>
+:root{--ink:#243c32;--muted:#576a60;--paper:#f8f6ee;--line:#dcded0;--green:#244e3d;--lime:#e3ecad;color:var(--ink);font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);min-width:280px}
+button,textarea{font:inherit}
+button{cursor:pointer;color:inherit}
+button:focus-visible,textarea:focus-visible{outline:3px solid #ab6431;outline-offset:4px}
+button:disabled{cursor:default}
+header,main,footer{max-width:1120px;margin:auto}
+header{padding:25px 0 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
+.brand{font-weight:800;display:flex;align-items:center;gap:11px;background:none;border:0;padding:0}
+.mark{background:var(--green);color:#fff;width:35px;height:35px;border-radius:50%;display:grid;place-items:center}
+.nav,.back{border:1px solid var(--line);background:transparent;border-radius:99px;padding:10px 18px;font-weight:650;font-size:.88rem}
+main{min-height:70vh;padding:32px 0}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:38px;align-items:center}
+.copy{padding:34px 0}
+.eyebrow,.meta{font-size:.85rem;font-weight:700;letter-spacing:.1em;color:var(--muted)}
+.eyebrow:before{content:"";display:inline-block;width:8px;height:8px;background:#8b9c48;border-radius:50%;margin-right:9px}
+h1,h2,p{margin-top:0}
+h1{font-size:clamp(2.7rem,6.1vw,5.1rem);line-height:1.12;letter-spacing:-.065em;margin-bottom:25px}
+.hero h1 span{color:#436347;display:block}
+.lead{font-size:1.06rem;color:var(--muted);line-height:1.9;max-width:31em}
+.primary{background:var(--green);color:white;border:1px solid var(--green);border-radius:99px;padding:14px 25px;font-weight:750;min-height:50px}
+.primary:hover{background:#32664e}
+.cta{display:flex;align-items:center;gap:15px;flex-wrap:wrap;margin-top:27px}
+.poster{background:#e0e7c2;min-height:420px;position:relative;overflow:hidden;border-radius:32px;isolation:isolate;display:grid;place-items:center}
+.poster:before,.poster:after{content:"";position:absolute;width:78%;aspect-ratio:1;border:1px solid #899d6f65;border-radius:50%;z-index:-1}
+.poster:after{width:61%;border-style:dashed}
+.sticker{position:absolute;border-radius:50%;display:grid;place-items:center;aspect-ratio:1;background:var(--bg);box-shadow:0 8px 0 #36553012;border:5px solid #fff9e9;font-family:"Segoe UI Emoji","Apple Color Emoji",sans-serif;line-height:1;transform:rotate(var(--angle))}
+.sticker:nth-child(1){width:44%;left:28%;top:24%;font-size:clamp(4rem,10vw,8rem);z-index:2}
+.sticker:nth-child(2){width:25%;left:8%;top:13%;font-size:clamp(2.5rem,6vw,4.5rem)}
+.sticker:nth-child(3){width:27%;right:7%;top:12%;font-size:clamp(2.6rem,6vw,4.5rem)}
+.sticker:nth-child(4){width:25%;left:12%;bottom:12%;font-size:clamp(2.5rem,6vw,4.5rem)}
+.sticker:nth-child(5){width:26%;right:10%;bottom:11%;font-size:clamp(2.6rem,6vw,4.5rem)}
+.spark{position:absolute;color:#546c38;font-size:2rem;left:48%;top:7%}
+.strip{margin-top:24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:21px}
+.strip strong{margin-right:8px;font-size:.88rem}
+.chip{background:#eeeee1;border-radius:99px;padding:6px 11px;font-size:.8rem}
+footer{padding:17px 0 24px;border-top:1px solid var(--line);color:var(--muted);font-size:.8rem}
+.panel{max-width:680px;margin:0 auto;background:#fffdf6;border:1px solid var(--line);border-radius:28px;padding:clamp(20px,5vw,42px);box-shadow:0 12px 40px #213b2d08}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}
+progress{width:100%;height:8px;border:0;display:block;appearance:none;border-radius:99px;background:#e9eadc;overflow:hidden}
+progress::-webkit-progress-bar{background:#e9eadc}
+progress::-webkit-progress-value{background:#6e884e;border-radius:99px}
+progress::-moz-progress-bar{background:#6e884e}
+.question{font-size:clamp(1.45rem,4vw,2.05rem);line-height:1.45;margin:28px 0 17px}
+.options{display:grid;gap:10px}
+.option{background:#fffdf6;border:1px solid var(--line);border-radius:16px;text-align:left;min-height:55px;padding:10px 13px;display:flex;align-items:center;gap:12px;line-height:1.45}
+.option:hover,.option[aria-pressed=true]{background:#edf1d5;border-color:#8f9f66}
+.letter{display:grid;place-items:center;flex:0 0 30px;height:30px;background:#eceee1;border-radius:50%;font-size:.8rem;font-weight:800}
+.hint{color:var(--muted);font-size:.83rem;margin:17px 0 0}
+.resultHero{display:flex;align-items:center;gap:20px;background:var(--bg);border-radius:20px;padding:20px;margin-bottom:23px}
+.resultHero h1{font-size:clamp(1.75rem,5vw,3.1rem);margin:5px 0 0}
+.bigAnimal{font-size:clamp(3.4rem,12vw,5.6rem);line-height:1}
+.desc{line-height:1.85;color:var(--muted);margin-bottom:18px}
+.scores{display:grid;gap:9px;margin:15px 0 23px}
+.score{display:grid;grid-template-columns:4em 1fr 3.7em;align-items:center;gap:9px;font-size:.88rem}
+.track{background:#eeeee3;border-radius:99px;height:9px;overflow:hidden}
+.fill{height:100%;background:#72915c;border-radius:99px}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:17px}
+textarea[hidden]{display:none}
+textarea{display:block;width:100%;margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:white}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.animal{background:#fffdf6;border:1px solid var(--line);border-radius:21px;padding:15px}
+.animal .tile{border-radius:14px;background:var(--bg);display:grid;place-items:center;height:115px;font-size:3.5rem}
+.animal h2{font-size:1.06rem;margin:14px 0 7px}
+.animal p{font-size:.9rem;line-height:1.7;color:var(--muted);margin:0}
+@media(max-width:1190px){header,main,footer{margin-inline:24px}}
+@media(max-width:740px){header,main,footer{margin-inline:16px}header{padding-top:15px}main{padding-top:19px}.hero{display:flex;flex-direction:column;gap:14px;align-items:stretch}.copy{padding:9px 0}.poster{min-height:0;aspect-ratio:1.4}.hero h1 span{display:inline}.lead{font-size:.95rem;margin-bottom:0}.cta{margin-top:17px}.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.animal{padding:10px}.resultHero{padding:14px;gap:11px}}
+</style>
+</head>
+<body>
+<header><button class="brand" data-action="home"><span class="mark" aria-hidden="true">✦</span>动物性格研究所</button><button class="nav" data-action="gallery">动物图鉴 ↗</button></header>
+<main id="app"></main>
+<footer>娱乐性格测试 · 答案只用于计算本次结果</footer>
+<noscript>请在浏览器中启用 JavaScript 后再打开测试。</noscript>
+<script>
+"use strict";
+const animals = {
+  fox: ["🦊","狐狸","灵活的观察家","你喜欢先看清局面，再决定怎么出手。碰到计划之外的事，你总能试出另一条路。","#f3ceaa"],
+  rabbit: ["🐇","垂耳兔","淡定的调停者","你擅长让气氛慢下来。别人着急做决定时，你能留出一点空隙，让大家都把话说完。","#ede0b2"],
+  cat: ["🐈","猫","独处的充电派","你有自己的节奏，知道什么时候该靠近，什么时候该留一点空间。熟悉你的人会发现你很会留意细节。","#f1d1d8"],
+  dog: ["🐕","金毛","热心的行动派","你常常是先伸手帮忙的人。一个好点子到了你这里，很容易变成一次真的约见或行动。","#f7d797"],
+  owl: ["🦉","猫头鹰","沉稳的规划者","你喜欢理清线索，给未知的事情留出余地。有你在，模糊的想法常能变成可以执行的步骤。","#ded4eb"],
+  otter: ["🦦","水獭","好奇的玩乐派","你很容易发现日常里的小乐趣。一次随口提起的想法，就可能变成你和朋友下次见面的理由。","#cce6dc"]
+};
+const questions = [
+  ["突然多出一个空闲下午，你会怎么过？", [["钻进一家没去过的小店","fox"],["找个舒服的位置晒太阳","rabbit"],["回家独享半天清静","cat"],["拉上朋友出去玩","otter"]]],
+  ["朋友临时取消见面，你的第一反应是？", [["问问要不要帮忙","dog"],["顺手把后面的安排理一理","owl"],["正好把想看的剧补了","cat"],["换个地方，来一次随机散步","otter"]]],
+  ["第一次去一个陌生的城市，你会先做什么？", [["找本地人常去的那条街","fox"],["先坐下吃点东西，缓一缓","rabbit"],["把路线和营业时间确认好","owl"],["叫上同行的人一起出发","dog"]]],
+  ["小组讨论突然冷场，你通常会？", [["开个轻松的话头","otter"],["听听还有谁想说","rabbit"],["问一个能打开思路的问题","fox"],["主动把话题接下去","dog"]]],
+  ["收到一本好看的空白笔记本，你想拿它来？", [["记下独处时冒出的念头","cat"],["整理目标和计划","owl"],["画些随手的小涂鸦","otter"],["收集奇怪又有意思的点子","fox"]]],
+  ["两位朋友意见不合，你会怎么做？", [["分别听听他们在意什么","rabbit"],["找出分歧，捋清来龙去脉","owl"],["主动约个时间把话说开","dog"],["给他们一点空间，等需要再出现","cat"]]],
+  ["下班或放学后，你最想收到哪条消息？", [["我发现一条有意思的近路","fox"],["什么也不用带，来一起吃饭","dog"],["今天也辛苦了，早点休息","rabbit"],["有个新活动，今晚去试试？","otter"]]],
+  ["突然接到一件棘手的事，你会先？", [["把任务拆成几步","owl"],["试试有没有更省力的做法","fox"],["先自己安静地想一会儿","cat"],["找个搭档一起解决","dog"]]],
+  ["逛市集时，哪种摊位最容易让你停下来？", [["能慢慢挑的茶点摊","rabbit"],["收纳整齐的文具铺","owl"],["店主安静读书的旧书摊","cat"],["可以当场动手的手作摊","otter"]]],
+  ["到了聚会现场，一个人也不认识。你会？", [["先观察谁聊的话题有意思","fox"],["给自己倒杯水，慢慢熟悉环境","rabbit"],["主动跟离得最近的人打招呼","dog"],["找个可以一起玩的小游戏","otter"]]],
+  ["旅行遇上下雨，原计划泡汤了。你会？", [["找个有窗的位置看雨","cat"],["看看室内备选地点和路线","owl"],["顺着屋檐找个新地方","fox"],["提议一起吃顿热乎的","dog"]]],
+  ["理想的周日晚上，你在哪里？", [["舒服地窝在沙发里发呆","rabbit"],["一个人慢慢做喜欢的事","cat"],["整理一下房间，写好明天要做的事","owl"],["跟朋友分享这周最好笑的事","otter"]]]
+];
+const app = document.querySelector("#app");
+let screen = "home", index = 0, answers = [], result, galleryFrom = "home", advance;
+const focusMain = () => {
+  const title = app.querySelector("h1,h2");
+  title.tabIndex = -1;
+  title.focus({preventScroll:true});
+};
+function show(next) {
+  clearTimeout(advance);
+  screen = next;
+  const views = {home, quiz, result: resultView, gallery};
+  app.innerHTML = views[next]();
+  window.scrollTo(0,0);
+  focusMain();
+}
+function home() {
+  return `<section class="hero"><div class="copy"><p class="eyebrow">动物性格测试</p><h1>测试你是<span>什么动物？</span></h1><p class="lead">从周末计划到朋友聚会，选出最像你的反应，看看哪种动物跟你最合拍。</p><div class="cta"><button class="primary" data-action="start">开始测试　→</button><span class="meta">12 道题 · 约 1 分钟</span></div></div><div class="poster" aria-hidden="true">
+  ${["fox","cat","owl","rabbit","otter"].map((key,i)=>`<span class="sticker" style="--bg:${animals[key][4]};--angle:${[-9,-13,12,9,-9][i]}deg">${animals[key][0]}</span>`).join("")}<span class="spark">✦</span></div></section>
+  <div class="strip"><strong>可能测出的动物</strong>${Object.values(animals).map(a=>`<span class="chip">${a[0]} ${a[1]}</span>`).join("")}</div>`;
+}
+function quiz() {
+  const [prompt, options] = questions[index];
+  return `<section class="panel"><div class="toolbar"><button class="back" data-action="previous">${index ? "← 上一题" : "← 首页"}</button><span class="meta">第 ${index+1} / ${questions.length} 题</span></div>
+  <progress aria-label="答题进度" max="${questions.length}" value="${index+1}"></progress>
+  <h1 class="question">${prompt}</h1><div class="options">
+  ${options.map(([label,key],i)=>`<button class="option" data-answer="${key}" aria-pressed="${answers[index]===key}"><span class="letter" aria-hidden="true">${"ABCD"[i]}</span>${label}</button>`).join("")}
+  </div><p class="hint">选择最像你的反应，选中后自动继续。</p></section>`;
+}
+function calculate(picks) {
+  const scores = Object.fromEntries(Object.keys(animals).map(key=>[key,0]));
+  picks.forEach(key => scores[key]++);
+  const top = Math.max(...Object.values(scores));
+  return {scores, key: [...picks].reverse().find(key=>scores[key]===top)};
+}
+function resultView() {
+  const [icon,name,title,description,color] = animals[result.key];
+  return `<section class="panel"><div class="toolbar"><button class="back" data-action="previous">← 修改最后一题</button><span class="meta">测试结果</span></div>
+  <div class="resultHero" style="--bg:${color}"><span class="bigAnimal" aria-hidden="true">${icon}</span><div><p class="meta" style="margin:0">${title}</p><h1>你是${name}！</h1></div></div>
+  <p class="desc">${description}</p>
+  <h2 style="font-size:1.07rem;margin-bottom:0">你的动物倾向</h2>
+  <div class="scores">${Object.entries(result.scores).sort((a,b)=>b[1]-a[1]).map(([key,count])=>`<div class="score"><span>${animals[key][1]}</span><div class="track" aria-hidden="true"><div class="fill" style="width:${count/questions.length*100}%"></div></div><span>${count} / ${questions.length}</span></div>`).join("")}</div>
+  <div class="actions"><button class="primary" data-action="share">复制结果</button><button class="back" data-action="start">再测一次</button><button class="back" data-action="gallery">动物图鉴</button></div>
+  <p class="hint" role="status" id="status"></p><textarea id="shareText" aria-label="可复制的测试结果" rows="3" readonly hidden></textarea></section>`;
+}
+function gallery() {
+  return `<section><div class="toolbar"><h1 class="question" style="margin:0">动物图鉴</h1><button class="back" data-action="galleryBack">← 返回</button></div><div class="gallery">
+  ${Object.values(animals).map(([icon,name,title,description,color])=>`<article class="animal"><div class="tile" aria-hidden="true" style="--bg:${color}">${icon}</div><h2>${name} · ${title}</h2><p>${description}</p></article>`).join("")}</div></section>`;
+}
+async function share() {
+  const [icon,name,title] = animals[result.key];
+  const status = document.querySelector("#status");
+  const field = document.querySelector("#shareText");
+  const link = location.protocol.startsWith("http") ? "\n"+location.href.split(/[?#]/)[0] : "";
+  field.value = `我的动物性格是${name} ${icon} · ${title}。你会是什么动物？${link}`;
+  try {
+    await navigator.clipboard.writeText(field.value);
+    status.textContent = "已复制，粘贴给朋友就能分享。";
+  } catch {
+    field.hidden = false;
+    field.focus();
+    field.select();
+    status.textContent = "请复制下方选中的文字。";
+  }
+}
+function select(key) {
+  if (advance !== undefined) return;
+  answers[index] = key;
+  app.querySelectorAll(".option").forEach(button=>{
+    button.setAttribute("aria-pressed",button.dataset.answer===key);
+    button.disabled = true;
+  });
+  advance = setTimeout(()=>{
+    advance = undefined;
+    if (index+1 < questions.length) {
+      index++;
+      show("quiz");
+    } else {
+      result = calculate(answers);
+      show("result");
+    }
+  },160);
+}
+document.addEventListener("click", event=>{
+  const button = event.target.closest("button");
+  if (!button) return;
+  if (button.dataset.answer) {
+    select(button.dataset.answer);
+    return;
+  }
+  if (advance !== undefined) {
+    clearTimeout(advance);
+    advance = undefined;
+  }
+  switch(button.dataset.action) {
+    case "home": show("home"); break;
+    case "start": index=0; answers=[]; result=undefined; show("quiz"); break;
+    case "previous":
+      if (screen==="result") {index=questions.length-1;show("quiz");}
+      else if (index>0) {index--;show("quiz");}
+      else show("home");
+      break;
+    case "gallery": if (screen!=="gallery") {galleryFrom=screen;show("gallery");} break;
+    case "galleryBack": show(galleryFrom); break;
+    case "share": share(); break;
+  }
+});
+show("home");
+</script>
+</body>
+</html>
